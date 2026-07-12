@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      html, body { background: #050a07; }
+      #page-loader {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        background: #050a07;
+        transition: opacity 0.4s ease;
+      }
+      #page-loader.is-hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+      #page-loader .loader-ring {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        border: 2px solid rgba(77, 255, 143, 0.18);
+        border-top-color: #4dff8f;
+        animation: loader-spin 0.8s linear infinite;
+      }
+      #page-loader .loader-text {
+        font-family: "Share Tech Mono", ui-monospace, monospace;
+        font-size: 11px;
+        letter-spacing: 0.3em;
+        color: rgba(200, 255, 217, 0.65);
+      }
+      #page-loader .loader-cursor {
+        animation: loader-blink 1.1s step-end infinite;
+      }
+      @keyframes loader-spin {
+        to { transform: rotate(360deg); }
+      }
+      @keyframes loader-blink {
+        50% { opacity: 0; }
+      }
+    </style>
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Blagoj Ramadanov — Junior Full Stack Developer. React, TypeScript, Node.js and REST APIs."
+      data-i18n-content="meta.description"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+    <title data-i18n="meta.title">Blagoj Ramadanov — Full Stack Developer</title>
+  </head>
+  <body class="crt-frame bg-crt-bg text-crt-ink font-mono antialiased">
+    <div id="page-loader" role="status" aria-label="Loading">
+      <div class="loader-ring" aria-hidden="true"></div>
+      <span class="loader-text">LOADING<span class="loader-cursor">_</span></span>
+    </div>
+    <header class="sticky top-0 z-50 bg-crt-bg/80 backdrop-blur border-b border-crt-green/15">
+      <div class="container mx-auto px-6 h-16 lg:h-20 flex items-center justify-between">
+        <a href="#top" class="flex items-center gap-3 group">
+          <svg viewBox="0 0 32 32" class="h-8 w-8 lg:h-9 lg:w-9 text-crt-green drop-shadow-[0_0_6px_rgba(77,255,143,0.65)]">
+            <rect x="3" y="5" width="26" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="1.6" />
+            <rect x="6" y="8" width="20" height="10" rx="1" fill="currentColor" fill-opacity="0.18" stroke="currentColor" stroke-width="1" />
+            <line x1="16" y1="23" x2="16" y2="27" stroke="currentColor" stroke-width="1.6" />
+            <line x1="10" y1="27" x2="22" y2="27" stroke="currentColor" stroke-width="1.6" />
+          </svg>
+          <span class="font-display text-2xl lg:text-3xl tracking-wide text-crt-green text-glow">BLAGOJ_RAMADANOV</span>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-8 text-sm text-crt-ink/70 tracking-wide">
+          <a href="#about" class="hover:text-crt-green transition"><span class="text-crt-green/50">01.</span> <span data-i18n="nav.about">About</span></a>
+          <a href="#skills" class="hover:text-crt-green transition"><span class="text-crt-green/50">02.</span> <span data-i18n="nav.skills">Skills</span></a>
+          <a href="#projects" class="hover:text-crt-green transition"><span class="text-crt-green/50">03.</span> <span data-i18n="nav.projects">Projects</span></a>
+          <a href="#experience" class="hover:text-crt-green transition"><span class="text-crt-green/50">04.</span> <span data-i18n="nav.experience">Experience</span></a>
+          <a href="#contact" class="hover:text-crt-green transition"><span class="text-crt-green/50">05.</span> <span data-i18n="nav.contact">Contact</span></a>
+          <button
+            id="lang-toggle"
+            type="button"
+            class="inline-flex items-center gap-1.5 rounded-md border border-crt-green/30 px-2.5 py-1 text-xs tracking-widest hover:border-crt-green transition"
+            aria-label="Toggle language"
+          >
+            <span data-lang-en class="text-crt-green">EN</span>
+            <span class="text-crt-green/30">/</span>
+            <span data-lang-de class="text-crt-ink/40">DE</span>
+          </button>
+        </nav>
+
+        <button
+          id="menu-button"
+          class="order-first md:order-none md:hidden p-2 -ml-2 text-crt-green"
+          aria-label="Toggle menu"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-7 h-7">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <div id="mobile-menu" class="hidden md:hidden container mx-auto px-6 mt-4">
+      <nav class="flex flex-col gap-4 text-crt-ink/80 bg-crt-panel border border-crt-green/15 rounded-lg p-6">
+        <a href="#about" class="hover:text-crt-green transition" data-i18n="nav.about">About</a>
+        <a href="#skills" class="hover:text-crt-green transition" data-i18n="nav.skills">Skills</a>
+        <a href="#projects" class="hover:text-crt-green transition" data-i18n="nav.projects">Projects</a>
+        <a href="#experience" class="hover:text-crt-green transition" data-i18n="nav.experience">Experience</a>
+        <a href="#contact" class="hover:text-crt-green transition" data-i18n="nav.contact">Contact</a>
+        <button
+          id="lang-toggle-mobile"
+          type="button"
+          class="mt-2 inline-flex items-center gap-1.5 self-start rounded-md border border-crt-green/30 px-2.5 py-1 text-xs tracking-widest hover:border-crt-green transition"
+          aria-label="Toggle language"
+        >
+          <span data-lang-en class="text-crt-green">EN</span>
+          <span class="text-crt-green/30">/</span>
+          <span data-lang-de class="text-crt-ink/40">DE</span>
+        </button>
+      </nav>
+    </div>
+
+    <div id="top" class="container mx-auto text-left mt-10 lg:mt-14 px-6 lg:px-8 animate-boot-in">
+      <div class="grid lg:grid-cols-[1fr_1.08fr] gap-16 lg:gap-20 xl:gap-28 items-center lg:min-h-[calc(100vh-9rem)] lg:py-10">
+        <div class="flex flex-col justify-center h-full">
+          <div class="relative mt-6 mb-2 h-44 w-44 sm:h-52 sm:w-52 lg:h-64 lg:w-64">
+            <div class="absolute inset-[6%] rounded-full bg-crt-green/25 blur-2xl"></div>
+            <svg viewBox="0 0 120 120" class="absolute inset-0 h-full w-full text-crt-green/50 animate-[spin_14s_linear_infinite] drop-shadow-[0_0_10px_rgba(77,255,143,0.5)]">
+              <circle cx="60" cy="60" r="58" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="1 7" />
+            </svg>
+            <svg viewBox="0 0 120 120" class="absolute inset-0 h-full w-full text-crt-cyan/40">
+              <circle cx="60" cy="60" r="51" fill="none" stroke="currentColor" stroke-width="1" opacity="0.6" />
+              <circle cx="60" cy="2" r="2.5" fill="currentColor" />
+              <circle cx="60" cy="118" r="2.5" fill="currentColor" />
+              <circle cx="2" cy="60" r="2.5" fill="currentColor" />
+              <circle cx="118" cy="60" r="2.5" fill="currentColor" />
+            </svg>
+            <img
+              src="/profile_picture.png"
+              alt="Blagoj Ramadanov"
+              decoding="async"
+              fetchpriority="high"
+              class="absolute inset-[8%] h-[84%] w-[84%] rounded-full object-cover border-[3px] border-crt-green/60 shadow-glow"
+            />
+            <span class="absolute bottom-2 right-2 h-5 w-5 rounded-full bg-crt-green border-2 border-crt-bg led animate-blink"></span>
+            <span class="absolute -top-2 -left-3 rounded-md border border-crt-green/40 bg-crt-panel px-2 py-1 text-xs tracking-widest text-crt-green text-glow">DEV</span>
+          </div>
+
+          <h2 class="text-lg mt-6 lg:text-2xl xl:text-3xl text-crt-ink/80">
+            <span data-i18n="hero.greeting">Hi, I'm</span> <span class="font-bold text-crt-green text-glow">Blagoj</span>.
+          </h2>
+          <h1 class="font-display text-4xl sm:text-5xl leading-[1.05] mt-4 lg:mt-6 lg:text-7xl xl:text-8xl tracking-wide break-words">
+            <span data-i18n="hero.junior">Junior</span> <br /><span class="text-crt-green text-glow" data-i18n="hero.role">Full Stack Developer</span><span class="text-crt-amber animate-blink">_</span>
+          </h1>
+          <p class="mt-6 lg:mt-8 text-crt-ink/70 text-left lg:text-lg xl:text-xl leading-relaxed max-w-xl" data-i18n="hero.paragraph">
+            I'm a Junior Full Stack Developer based in Germany, building modern
+            web applications with React, TypeScript, Node.js and REST APIs. I
+            care about clean code, readable UIs, and shipping things that
+            actually work — and I'm always learning something new.
+          </p>
+
+          <div class="flex flex-col items-start mt-8 lg:mt-10">
+            <div class="flex gap-6 lg:gap-8">
+              <a
+                href="https://www.linkedin.com/in/blagoj-ramadanov-31b7441b5/"
+                target="_blank"
+                rel="noreferrer"
+                class="group p-1"
+                aria-label="LinkedIn"
+              >
+                <svg
+                  class="h-6 w-6 lg:h-8 lg:w-8 fill-crt-ink/60 transition group-hover:fill-crt-green group-hover:drop-shadow-[0_0_6px_rgba(77,255,143,0.7)]"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
+                  />
+                </svg>
+              </a>
+              <a
+                href="https://github.com/blagojramadanov"
+                target="_blank"
+                rel="noreferrer"
+                class="group p-1"
+                aria-label="GitHub"
+              >
+                <svg
+                  class="h-6 w-6 lg:h-8 lg:w-8 fill-crt-ink/60 transition group-hover:fill-crt-green group-hover:drop-shadow-[0_0_6px_rgba(77,255,143,0.7)]"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                  />
+                </svg>
+              </a>
+              <a href="mailto:blaze.ramadanov@gmail.com" class="group p-1" aria-label="Email">
+                <svg
+                  class="h-6 w-6 lg:h-8 lg:w-8 fill-crt-ink/60 transition group-hover:fill-crt-green group-hover:drop-shadow-[0_0_6px_rgba(77,255,143,0.7)]"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M2 4h20a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm19.518 2H2.482L12 12.8 21.518 6zM2 18h20V8.234l-9.375 6.87a1 1 0 0 1-1.25 0L2 8.234V18z"
+                  />
+                </svg>
+              </a>
+            </div>
+            <div class="flex flex-wrap gap-4">
+              <a
+                href="#projects"
+                class="mt-10 lg:mt-12 text-sm lg:text-base font-medium bg-crt-green/10 text-crt-green border border-crt-green/50 hover:bg-crt-green hover:text-crt-bg hover:shadow-glow rounded-md px-5 py-3 flex items-center justify-center transition tracking-wide"
+                >[ <span data-i18n="hero.btnProjects">View Projects</span> ]
+              </a>
+              <a
+                href="#contact"
+                class="mt-10 lg:mt-12 text-sm lg:text-base font-medium border border-crt-ink/25 text-crt-ink/80 hover:border-crt-amber hover:text-crt-amber rounded-md px-5 py-3 flex items-center justify-center transition tracking-wide"
+                >[ <span data-i18n="hero.btnContact">Contact Me</span> ]</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-center min-w-0 lg:px-4">
+          <div class="relative w-full max-w-[440px] sm:max-w-[520px] lg:max-w-[640px] xl:max-w-[740px]">
+          <div class="absolute inset-[6%] -z-10 rounded-full bg-crt-green/15 blur-3xl"></div>
+          <svg viewBox="0 0 540 460" class="w-full h-auto drop-shadow-[0_0_45px_rgba(77,255,143,0.3)]">
+            <defs>
+              <linearGradient id="monBody" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#17241a" />
+                <stop offset="100%" stop-color="#080f0a" />
+              </linearGradient>
+              <linearGradient id="monScreen" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#0c2013" />
+                <stop offset="100%" stop-color="#03130a" />
+              </linearGradient>
+              <radialGradient id="monGlow" cx="50%" cy="35%" r="70%">
+                <stop offset="0%" stop-color="#4dff8f" stop-opacity="0.35" />
+                <stop offset="100%" stop-color="#4dff8f" stop-opacity="0" />
+              </radialGradient>
+            </defs>
+
+            <g opacity="0.18" stroke="#4dff8f" stroke-width="1">
+              <line x1="0" y1="60" x2="150" y2="60" />
+              <line x1="0" y1="120" x2="100" y2="120" />
+              <line x1="440" y1="80" x2="540" y2="80" />
+              <line x1="460" y1="150" x2="540" y2="150" />
+              <line x1="0" y1="380" x2="120" y2="380" />
+              <line x1="420" y1="400" x2="540" y2="400" />
+            </g>
+            <g fill="#4dff8f" opacity="0.5">
+              <circle cx="60" cy="60" r="2.2" />
+              <circle cx="480" cy="150" r="2.2" />
+              <circle cx="90" cy="380" r="2.2" />
+              <circle cx="470" cy="400" r="2.2" />
+            </g>
+
+            <ellipse cx="270" cy="336" rx="150" ry="6" fill="#4dff8f" opacity="0.08" />
+
+            <rect x="88" y="36" width="364" height="266" rx="20" fill="url(#monBody)" stroke="#4dff8f" stroke-opacity="0.35" stroke-width="1.5" />
+            <circle cx="106" cy="54" r="2.5" fill="#4dff8f" fill-opacity="0.6" />
+            <circle cx="434" cy="54" r="2.5" fill="#4dff8f" fill-opacity="0.6" />
+            <circle cx="106" cy="266" r="2.5" fill="#4dff8f" fill-opacity="0.6" />
+            <circle cx="434" cy="266" r="2.5" fill="#4dff8f" fill-opacity="0.6" />
+
+            <rect x="112" y="60" width="316" height="200" rx="10" fill="url(#monGlow)" />
+            <rect x="112" y="60" width="316" height="200" rx="10" fill="url(#monScreen)" stroke="#4dff8f" stroke-opacity="0.5" stroke-width="1.5" />
+
+            <g opacity="0.2">
+              <line x1="112" y1="72" x2="428" y2="72" stroke="#000" stroke-width="1" />
+              <line x1="112" y1="92" x2="428" y2="92" stroke="#000" stroke-width="1" />
+              <line x1="112" y1="112" x2="428" y2="112" stroke="#000" stroke-width="1" />
+              <line x1="112" y1="132" x2="428" y2="132" stroke="#000" stroke-width="1" />
+              <line x1="112" y1="152" x2="428" y2="152" stroke="#000" stroke-width="1" />
+              <line x1="112" y1="172" x2="428" y2="172" stroke="#000" stroke-width="1" />
+              <line x1="112" y1="192" x2="428" y2="192" stroke="#000" stroke-width="1" />
+              <line x1="112" y1="212" x2="428" y2="212" stroke="#000" stroke-width="1" />
+              <line x1="112" y1="232" x2="428" y2="232" stroke="#000" stroke-width="1" />
+              <line x1="112" y1="252" x2="428" y2="252" stroke="#000" stroke-width="1" />
+            </g>
+
+            <path d="M250 302 L260 330 L280 330 L280 340 L260 340 L250 368" fill="none" stroke="#4dff8f" stroke-opacity="0.4" stroke-width="6" stroke-linecap="round" />
+            <ellipse cx="270" cy="378" rx="86" ry="12" fill="url(#monBody)" stroke="#4dff8f" stroke-opacity="0.3" stroke-width="1.5" />
+
+            <rect x="150" y="398" width="240" height="46" rx="10" fill="url(#monBody)" stroke="#4dff8f" stroke-opacity="0.3" stroke-width="1.5" />
+            <g fill="#4dff8f" opacity="0.45">
+              <rect x="164" y="410" width="12" height="8" rx="1.5" />
+              <rect x="182" y="410" width="12" height="8" rx="1.5" />
+              <rect x="200" y="410" width="12" height="8" rx="1.5" />
+              <rect x="218" y="410" width="12" height="8" rx="1.5" />
+              <rect x="236" y="410" width="12" height="8" rx="1.5" />
+              <rect x="254" y="410" width="12" height="8" rx="1.5" />
+              <rect x="272" y="410" width="12" height="8" rx="1.5" />
+              <rect x="290" y="410" width="12" height="8" rx="1.5" />
+              <rect x="308" y="410" width="12" height="8" rx="1.5" />
+              <rect x="326" y="410" width="12" height="8" rx="1.5" />
+              <rect x="344" y="410" width="12" height="8" rx="1.5" />
+              <rect x="362" y="410" width="12" height="8" rx="1.5" />
+              <rect x="200" y="424" width="80" height="8" rx="1.5" />
+            </g>
+          </svg>
+
+          <nav class="absolute left-[20.7%] top-[13%] w-[58.5%] h-[43.5%] overflow-hidden rounded-md flex flex-col justify-center gap-0.5 sm:gap-1 lg:gap-1.5 px-2.5 sm:px-4 lg:px-5 font-mono leading-tight">
+            <div class="mb-1 sm:mb-2 pb-1 sm:pb-1.5 border-b border-crt-green/20 hidden sm:block">
+              <span class="text-[9px] sm:text-[10px] lg:text-xs tracking-[0.2em] sm:tracking-[0.25em] text-crt-green/50" data-i18n="hero.selectDestination">SELECT DESTINATION</span>
+            </div>
+            <a href="#about" class="group flex items-center gap-1.5 sm:gap-2 py-px sm:py-0.5 lg:py-1 text-[9px] sm:text-xs lg:text-sm xl:text-base text-crt-ink/70 hover:text-crt-green transition">
+              <span class="w-3 shrink-0 text-crt-amber opacity-0 group-hover:opacity-100 transition">&gt;</span>
+              <span class="shrink-0 text-crt-green/50 group-hover:text-crt-green">01</span>
+              <span class="group-hover:text-glow truncate" data-i18n="nav.about">About</span>
+            </a>
+            <a href="#skills" class="group flex items-center gap-1.5 sm:gap-2 py-px sm:py-0.5 lg:py-1 text-[9px] sm:text-xs lg:text-sm xl:text-base text-crt-ink/70 hover:text-crt-green transition">
+              <span class="w-3 shrink-0 text-crt-amber opacity-0 group-hover:opacity-100 transition">&gt;</span>
+              <span class="shrink-0 text-crt-green/50 group-hover:text-crt-green">02</span>
+              <span class="group-hover:text-glow truncate" data-i18n="nav.skills">Skills</span>
+            </a>
+            <a href="#projects" class="group flex items-center gap-1.5 sm:gap-2 py-px sm:py-0.5 lg:py-1 text-[9px] sm:text-xs lg:text-sm xl:text-base text-crt-ink/70 hover:text-crt-green transition">
+              <span class="w-3 shrink-0 text-crt-amber opacity-0 group-hover:opacity-100 transition">&gt;</span>
+              <span class="shrink-0 text-crt-green/50 group-hover:text-crt-green">03</span>
+              <span class="group-hover:text-glow truncate" data-i18n="nav.projects">Projects</span>
+            </a>
+            <a href="#experience" class="group flex items-center gap-1.5 sm:gap-2 py-px sm:py-0.5 lg:py-1 text-[9px] sm:text-xs lg:text-sm xl:text-base text-crt-ink/70 hover:text-crt-green transition">
+              <span class="w-3 shrink-0 text-crt-amber opacity-0 group-hover:opacity-100 transition">&gt;</span>
+              <span class="shrink-0 text-crt-green/50 group-hover:text-crt-green">04</span>
+              <span class="group-hover:text-glow truncate" data-i18n="nav.experience">Experience</span>
+            </a>
+            <a href="#contact" class="group flex items-center gap-1.5 sm:gap-2 py-px sm:py-0.5 lg:py-1 text-[9px] sm:text-xs lg:text-sm xl:text-base text-crt-ink/70 hover:text-crt-green transition">
+              <span class="w-3 shrink-0 text-crt-amber opacity-0 group-hover:opacity-100 transition">&gt;</span>
+              <span class="shrink-0 text-crt-green/50 group-hover:text-crt-green">05</span>
+              <span class="group-hover:text-glow truncate" data-i18n="nav.contact">Contact</span>
+            </a>
+            <span class="mt-0.5 sm:mt-1 text-crt-amber animate-blink text-[9px] sm:text-xs">_</span>
+          </nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-28 lg:mt-40 grid lg:grid-cols-2 gap-12 items-start scroll-mt-20 lg:scroll-mt-24" id="about" data-reveal>
+        <div>
+          <h2 class="font-display text-4xl lg:text-6xl tracking-wide text-crt-green text-glow" data-i18n="about.title">About Me</h2>
+          <p class="text-crt-ink/70 mt-4 lg:mt-6 lg:text-lg leading-relaxed" data-i18n="about.paragraph">
+            I'm a Junior Full Stack Developer with a genuine passion for
+            programming. My journey into web development started with small
+            personal projects and grew into a real interest in understanding
+            how software works end to end — from the interface a user sees to
+            the data behind it. Outside of the browser, I'm also into Arduino
+            and small hardware/electronics projects — there's something
+            satisfying about code controlling something physical.
+          </p>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div class="terminal-window p-5">
+            <div class="flex items-center gap-1.5 mb-3">
+              <span class="h-2 w-2 rounded-full bg-red-500/70"></span>
+              <span class="h-2 w-2 rounded-full bg-crt-amber/70"></span>
+              <span class="h-2 w-2 rounded-full bg-crt-green/70"></span>
+            </div>
+            <svg viewBox="0 0 24 24" class="h-5 w-5 text-crt-green mb-2" fill="none" stroke="currentColor" stroke-width="1.6">
+              <rect x="3" y="14" width="7" height="7" rx="1" />
+              <rect x="14" y="14" width="7" height="7" rx="1" />
+              <rect x="8.5" y="3" width="7" height="7" rx="1" />
+            </svg>
+            <h3 class="font-bold text-crt-ink" data-i18n="about.card1.title">Building real projects</h3>
+            <p class="text-crt-ink/60 text-sm mt-2 leading-relaxed" data-i18n="about.card1.desc">
+              Every app I ship, from a football score tracker to a notes app,
+              teaches me something new about writing better code.
+            </p>
+          </div>
+          <div class="terminal-window p-5">
+            <div class="flex items-center gap-1.5 mb-3">
+              <span class="h-2 w-2 rounded-full bg-red-500/70"></span>
+              <span class="h-2 w-2 rounded-full bg-crt-amber/70"></span>
+              <span class="h-2 w-2 rounded-full bg-crt-green/70"></span>
+            </div>
+            <svg viewBox="0 0 24 24" class="h-5 w-5 text-crt-cyan mb-2" fill="none" stroke="currentColor" stroke-width="1.6">
+              <circle cx="12" cy="12" r="9" />
+              <circle cx="12" cy="12" r="5" />
+              <circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none" />
+            </svg>
+            <h3 class="font-bold text-crt-ink" data-i18n="about.card2.title">Problem solving mindset</h3>
+            <p class="text-crt-ink/60 text-sm mt-2 leading-relaxed" data-i18n="about.card2.desc">
+              I like breaking down a messy problem into small, testable pieces
+              and building it back up into something reliable. Much of what I
+              know comes from trial and error — I treat mistakes as a way to
+              improve and understand concepts better.
+            </p>
+          </div>
+          <div class="terminal-window p-5">
+            <div class="flex items-center gap-1.5 mb-3">
+              <span class="h-2 w-2 rounded-full bg-red-500/70"></span>
+              <span class="h-2 w-2 rounded-full bg-crt-amber/70"></span>
+              <span class="h-2 w-2 rounded-full bg-crt-green/70"></span>
+            </div>
+            <svg viewBox="0 0 24 24" class="h-5 w-5 text-crt-amber mb-2" fill="none" stroke="currentColor" stroke-width="1.6">
+              <path d="M4.5 4.5v5h5" />
+              <path d="M5 9A7.5 7.5 0 1 1 6.5 15.5" />
+            </svg>
+            <h3 class="font-bold text-crt-ink" data-i18n="about.card3.title">Continuous learning</h3>
+            <p class="text-crt-ink/60 text-sm mt-2 leading-relaxed" data-i18n="about.card3.desc">
+              I revisit old code often and I'm not afraid to refactor when I
+              know a better way.
+            </p>
+          </div>
+          <div class="terminal-window p-5">
+            <div class="flex items-center gap-1.5 mb-3">
+              <span class="h-2 w-2 rounded-full bg-red-500/70"></span>
+              <span class="h-2 w-2 rounded-full bg-crt-amber/70"></span>
+              <span class="h-2 w-2 rounded-full bg-crt-green/70"></span>
+            </div>
+            <svg viewBox="0 0 24 24" class="h-5 w-5 text-crt-green mb-2" fill="currentColor">
+              <path d="M12 2 L14 10 L22 12 L14 14 L12 22 L10 14 L2 12 L10 10 Z" />
+            </svg>
+            <h3 class="font-bold text-crt-ink" data-i18n="about.card4.title">Exploring new tech</h3>
+            <p class="text-crt-ink/60 text-sm mt-2 leading-relaxed" data-i18n="about.card4.desc">
+              From modern frontend tooling to AI-assisted development, I stay
+              curious about the tools that make developers more effective.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-28 lg:mt-40 pt-4 scroll-mt-20 lg:scroll-mt-24" id="skills" data-reveal>
+        <h2 class="font-display text-4xl lg:text-6xl tracking-wide text-crt-green text-glow" data-i18n="skills.title">Skills &amp; Stack</h2>
+        <p class="text-crt-ink/70 mt-4 lg:mt-6 lg:text-lg" data-i18n="skills.subtitle">
+          Technologies I use regularly, and the ones I'm actively leveling up.
+        </p>
+      </div>
+
+      <div class="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="terminal-window p-6" data-reveal>
+          <div class="terminal-titlebar -mx-6 -mt-6 mb-4 px-6 py-3 rounded-t-[10px] flex items-center gap-1.5">
+            <span class="h-2 w-2 rounded-full bg-red-500/70"></span>
+            <span class="h-2 w-2 rounded-full bg-crt-amber/70"></span>
+            <span class="h-2 w-2 rounded-full bg-crt-green/70"></span>
+          </div>
+          <svg viewBox="0 0 24 24" class="h-6 w-6 text-crt-green mb-3" fill="none" stroke="currentColor" stroke-width="1.6">
+            <rect x="2" y="4" width="20" height="16" rx="2" />
+            <line x1="2" y1="8" x2="22" y2="8" />
+            <circle cx="5" cy="6" r="0.6" fill="currentColor" stroke="none" />
+            <circle cx="7.5" cy="6" r="0.6" fill="currentColor" stroke="none" />
+          </svg>
+          <h3 class="font-bold text-crt-green tracking-wide" data-i18n="skills.frontend">FRONTEND</h3>
+          <ul class="mt-4 space-y-2.5 text-crt-ink/70 text-sm">
+            <li class="flex items-center gap-2.5">
+              <svg viewBox="0 0 24 24" class="h-4 w-4 shrink-0" fill="none">
+                <ellipse cx="12" cy="12" rx="10" ry="4.2" stroke="#61dafb" stroke-width="1.4" />
+                <ellipse cx="12" cy="12" rx="10" ry="4.2" stroke="#61dafb" stroke-width="1.4" transform="rotate(60 12 12)" />
+                <ellipse cx="12" cy="12" rx="10" ry="4.2" stroke="#61dafb" stroke-width="1.4" transform="rotate(120 12 12)" />
+                <circle cx="12" cy="12" r="2" fill="#61dafb" />
+              </svg>
+              React
+            </li>
+            <li class="flex items-center gap-2.5">
+              <svg viewBox="0 0 24 24" class="h-4 w-4 shrink-0">
+                <rect width="24" height="24" rx="5" fill="#f7df1e" />
+                <text x="12" y="16.5" font-size="9" font-family="'Share Tech Mono',monospace" font-weight="700" fill="#1a1a1a" text-anchor="middle">JS</text>
+              </svg>
+              JavaScript
+            </li>
+            <li class="flex items-center gap-2.5">
+              <svg viewBox="0 0 24 24" class="h-4 w-4 shrink-0">
+                <rect width="24" height="24" rx="5" fill="#3178c6" />
+                <text x="12" y="16.5" font-size="8.5" font-family="'Share Tech Mono',monospace" font-weight="700" fill="#ffffff" text-anchor="middle">TS</text>
+              </svg>
+              TypeScript
+            </li>
+            <li class="flex items-center gap-2.5">
+              <svg viewBox="0 0 24 24" class="h-4 w-4 shrink-0">
+                <path d="M3 2h18l-1.6 18L12 22l-7.4-2L3 2Z" fill="#e34f26" />
+                <text x="12" y="16" font-size="8" font-family="'Share Tech Mono',monospace" font-weight="700" fill="#ffffff" text-anchor="middle">5</text>
+              </svg>
+              HTML5
+            </li>
+            <li class="flex items-center gap-2.5">
+              <svg viewBox="0 0 24 24" class="h-4 w-4 shrink-0">
+                <path d="M3 2h18l-1.6 18L12 22l-7.4-2L3 2Z" fill="#1572b6" />
+                <text x="12" y="16" font-size="8" font-family="'Share Tech Mono',monospace" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+              </svg>
+              CSS3
+            </li>
+            <li class="flex items-center gap-2.5">
+              <svg viewBox="0 0 24 24" class="h-4 w-4 shrink-0" fill="#38bdf8">
+                <path d="M6 9c.8-3 2.6-4.5 5.4-4.5 3.6 0 4.2 2.7 6 3.2-.8 3-2.6 4.5-5.4 4.5-3.6 0-4.2-2.7-6-3.2Z" />
+                <path d="M1 14.7c.8-3 2.6-4.5 5.4-4.5 3.6 0 4.2 2.7 6 3.2-.8 3-2.6 4.5-5.4 4.5-3.6 0-4.2-2.7-6-3.2Z" />
+              </svg>
+              Tailwind CSS
+            </li>
+          </ul>
+        </div>
+        <div class="terminal-window p-6" data-reveal>
+          <div class="terminal-titlebar -mx-6 -mt-6 mb-4 px-6 py-3 rounded-t-[10px] flex items-center gap-1.5">
+            <span class="h-2 w-2 rounded-full bg-red-500/70"></span>
+            <span class="h-2 w-2 rounded-full bg-crt-amber/70"></span>
+            <span class="h-2 w-2 rounded-full bg-crt-green/70"></span>
+          </div>
+          <svg viewBox="0 0 24 24" class="h-6 w-6 text-crt-cyan mb-3" fill="none" stroke="currentColor" stroke-width="1.6">
+            <rect x="3" y="4" width="18" height="6" rx="1.5" />
+            <rect x="3" y="14" width="18" height="6" rx="1.5" />
+            <circle cx="6.5" cy="7" r="0.8" fill="currentColor" stroke="none" />
+            <circle cx="6.5" cy="17" r="0.8" fill="currentColor" stroke="none" />
+          </svg>
+          <h3 class="font-bold text-crt-cyan tracking-wide" data-i18n="skills.backend">BACKEND</h3>
+          <ul class="mt-4 space-y-2.5 text-crt-ink/70 text-sm">
+            <li class="flex items-center gap-2.5">
+              <svg viewBox="0 0 24 24" class="h-4 w-4 shrink-0" fill="#3c873a" fill-opacity="0.18" stroke="#3c873a" stroke-width="1.4">
+                <path d="M12 2 20.5 7v10L12 22 3.5 17V7Z" />
+              </svg>
+              Node.js
+            </li>
+            <li class="flex items-center gap-2.5">
+              <svg viewBox="0 0 24 24" class="h-4 w-4 shrink-0">
+                <rect width="24" height="24" rx="5" fill="#111318" stroke="#9ca3af" stroke-opacity="0.4" />
+                <text x="12" y="16" font-size="7.5" font-family="'Share Tech Mono',monospace" font-weight="700" fill="#e5e7eb" text-anchor="middle">EX</text>
+              </svg>
+              Express
+            </li>
+            <li class="flex items-center gap-2.5">
+              <svg viewBox="0 0 24 24" class="h-4 w-4 shrink-0" fill="none" stroke="#5ff3ff" stroke-width="1.6">
+                <path d="M4 8h13l-3-3" />
+                <path d="M20 16H7l3 3" />
+              </svg>
+              REST APIs
+            </li>
+          </ul>
+        </div>
+        <div class="terminal-window p-6" data-reveal>
+          <div class="terminal-titlebar -mx-6 -mt-6 mb-4 px-6 py-3 rounded-t-[10px] flex items-center gap-1.5">
+            <span class="h-2 w-2 rounded-full bg-red-500/70"></span>
+            <span class="h-2 w-2 rounded-full bg-crt-amber/70"></span>
+            <span class="h-2 w-2 rounded-full bg-crt-green/70"></span>
+          </div>
+          <svg viewBox="0 0 24 24" class="h-6 w-6 text-crt-green mb-3" fill="none" stroke="currentColor" stroke-width="1.6">
+            <rect x="2" y="3" width="20" height="18" rx="2" />
+            <path d="M6 9l4 3-4 3" />
+            <line x1="12" y1="15" x2="17" y2="15" />
+          </svg>
+          <h3 class="font-bold text-crt-green tracking-wide" data-i18n="skills.tools">TOOLS</h3>
+          <ul class="mt-4 space-y-2.5 text-crt-ink/70 text-sm">
+            <li class="flex items-center gap-2.5">
+              <svg viewBox="0 0 24 24" class="h-4 w-4 shrink-0" fill="none" stroke="#f05033" stroke-width="1.6">
+                <circle cx="6" cy="6" r="2" />
+                <circle cx="6" cy="18" r="2" />
+                <circle cx="18" cy="12" r="2" />
+                <path d="M6 8v8" />
+                <path d="M6 12h12" />
+              </svg>
+              Git
+            </li>
+            <li class="flex items-center gap-2.5">
+              <svg viewBox="0 0 24 24" class="h-4 w-4 shrink-0" fill="#e5e7eb">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+              </svg>
+              GitHub
+            </li>
+            <li class="flex items-center gap-2.5">
+              <svg viewBox="0 0 24 24" class="h-4 w-4 shrink-0">
+                <defs>
+                  <linearGradient id="viteGrad" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#a78bfa" />
+                    <stop offset="100%" stop-color="#fbbf24" />
+                  </linearGradient>
+                </defs>
+                <path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" fill="url(#viteGrad)" />
+              </svg>
+              Vite
+            </li>
+            <li class="flex items-center gap-2.5">
+              <svg viewBox="0 0 24 24" class="h-4 w-4 shrink-0">
+                <rect width="24" height="24" rx="5" fill="#0a2a43" stroke="#007acc" stroke-opacity="0.5" />
+                <text x="12" y="16" font-size="7.5" font-family="'Share Tech Mono',monospace" font-weight="700" fill="#3aa8ff" text-anchor="middle">VS</text>
+              </svg>
+              VS Code
+            </li>
+          </ul>
+        </div>
+        <div class="terminal-window p-6" data-reveal>
+          <div class="terminal-titlebar -mx-6 -mt-6 mb-4 px-6 py-3 rounded-t-[10px] flex items-center gap-1.5">
+            <span class="h-2 w-2 rounded-full bg-red-500/70"></span>
+            <span class="h-2 w-2 rounded-full bg-crt-amber/70"></span>
+            <span class="h-2 w-2 rounded-full bg-crt-green/70"></span>
+          </div>
+          <svg viewBox="0 0 24 24" class="h-6 w-6 text-crt-amber mb-3" fill="none" stroke="currentColor" stroke-width="1.6">
+            <rect x="7" y="7" width="10" height="10" rx="1.5" />
+            <line x1="12" y1="2" x2="12" y2="7" />
+            <line x1="12" y1="17" x2="12" y2="22" />
+            <line x1="2" y1="12" x2="7" y2="12" />
+            <line x1="17" y1="12" x2="22" y2="12" />
+          </svg>
+          <h3 class="font-bold text-crt-amber tracking-wide" data-i18n="skills.other">OTHER</h3>
+          <ul class="mt-4 space-y-2.5 text-crt-ink/70 text-sm">
+            <li class="flex items-center gap-2.5">
+              <svg viewBox="0 0 24 24" class="h-4 w-4 shrink-0" fill="#ffb347">
+                <path d="M12 2 L14 10 L22 12 L14 14 L12 22 L10 14 L2 12 L10 10 Z" />
+              </svg>
+              AI Integration
+            </li>
+            <li class="flex items-center gap-2.5">
+              <svg viewBox="0 0 24 24" class="h-4 w-4 shrink-0" fill="none" stroke="#4dff8f" stroke-width="1.6">
+                <rect x="3" y="14" width="7" height="7" rx="1" />
+                <rect x="14" y="14" width="7" height="7" rx="1" />
+                <rect x="8.5" y="3" width="7" height="7" rx="1" />
+              </svg>
+              Full Stack Development
+            </li>
+            <li class="flex items-center gap-2.5">
+              <svg viewBox="0 0 24 24" class="h-4 w-4 shrink-0" fill="none" stroke="#00979d" stroke-width="1.6">
+                <rect x="4" y="8" width="16" height="9" rx="2" />
+                <circle cx="9.5" cy="12.5" r="1.4" fill="#00979d" stroke="none" />
+                <path d="M14 11h3M14 14h3M8 8V5M16 8V5M8 19v-2M16 19v-2" />
+              </svg>
+              Arduino
+            </li>
+            <li class="flex items-center gap-2.5">
+              <svg viewBox="0 0 24 24" class="h-4 w-4 shrink-0">
+                <rect width="24" height="24" rx="5" fill="#00599c" />
+                <text x="12" y="16" font-size="7" font-family="'Share Tech Mono',monospace" font-weight="700" fill="#ffffff" text-anchor="middle">C++</text>
+              </svg>
+              C++
+            </li>
+            <li class="flex items-center gap-2.5">
+              <svg viewBox="0 0 24 24" class="h-4 w-4 shrink-0">
+                <rect width="24" height="24" rx="5" fill="#283593" />
+                <text x="12" y="16" font-size="8.5" font-family="'Share Tech Mono',monospace" font-weight="700" fill="#ffffff" text-anchor="middle">C</text>
+              </svg>
+              C
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="text-center mt-28 lg:mt-40 pt-4 scroll-mt-20 lg:scroll-mt-24" id="projects" data-reveal>
+        <h2 class="font-display text-4xl lg:text-6xl tracking-wide text-crt-green text-glow" data-i18n="projects.title">My Projects</h2>
+        <p class="text-crt-ink/70 mt-4 lg:mt-6 lg:text-lg" data-i18n="projects.subtitle">
+          Here are a few real projects, so you can get a sense of my skills
+          and experience.
+        </p>
+      </div>
+
+      <div class="mt-20 grid gap-y-20 gap-x-10 md:grid-cols-2">
+        <div class="flex flex-col items-start w-full min-w-0" data-reveal>
+          <div class="group relative w-full rounded-2xl bg-gradient-to-b from-[#1b140d] to-[#0a0705] p-3 lg:p-4 shadow-bezel">
+            <div class="flex items-center gap-1.5 px-1 pb-3">
+              <span class="h-2.5 w-2.5 rounded-full bg-red-500/70"></span>
+              <span class="h-2.5 w-2.5 rounded-full bg-crt-amber/70"></span>
+              <span class="h-2.5 w-2.5 rounded-full bg-crt-green/70"></span>
+              <span class="ml-auto flex items-center gap-1.5 text-[10px] tracking-widest text-crt-green/70">
+                <span class="h-1.5 w-1.5 rounded-full bg-crt-green led animate-blink"></span><span data-i18n="projects.live">LIVE</span>
+              </span>
+            </div>
+            <div class="screen-glass relative aspect-[4/3] flex items-center justify-center rounded-lg overflow-hidden border border-crt-green/15 bg-crt-screen p-4 lg:p-6">
+              <img src="/projects/b-score.jpg" alt="B-Score football app" loading="lazy" decoding="async" class="max-w-full max-h-full object-contain drop-shadow-[0_0_20px_rgba(0,0,0,0.6)]" />
+              <div class="scan-sweep"></div>
+            </div>
+          </div>
+          <h3 class="font-display text-3xl tracking-wide mt-6 lg:mt-8 text-crt-ink" data-i18n="projects.p1.title">B-Score — Football App</h3>
+
+          <a
+            href="https://blagojramadanov.github.io/b-score/"
+            target="_blank"
+            rel="noreferrer"
+            class="text-crt-green font-medium flex items-center text-lg mt-3"
+            >blagojramadanov.github.io/b-score
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5 ml-2 -mr-1">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+            </svg>
+          </a>
+
+          <p class="text-crt-ink/60 mt-4 leading-relaxed" data-i18n="projects.p1.desc">
+            Live football scores pulled from a real sports API. Browse
+            leagues, teams, standings and fixtures from a single, fast
+            interface covering Europe's top 5 leagues.
+          </p>
+          <div class="flex gap-2 mt-4 lg:mt-6 flex-wrap">
+            <div class="rounded-md border border-crt-green/30 text-crt-green px-2.5 py-1 text-xs tracking-wide">HTML5</div>
+            <div class="rounded-md border border-crt-green/30 text-crt-green px-2.5 py-1 text-xs tracking-wide">SCSS</div>
+            <div class="rounded-md border border-crt-green/30 text-crt-green px-2.5 py-1 text-xs tracking-wide">JavaScript</div>
+            <div class="rounded-md border border-crt-green/30 text-crt-green px-2.5 py-1 text-xs tracking-wide">REST API</div>
+          </div>
+          <a
+            href="https://github.com/blagojramadanov/b-score.git"
+            target="_blank"
+            rel="noreferrer"
+            class="mt-6 lg:mt-8 text-sm lg:text-base font-medium bg-crt-green/10 text-crt-green border border-crt-green/50 hover:bg-crt-green hover:text-crt-bg hover:shadow-glow rounded-md px-5 py-3 flex items-center justify-center transition"
+            >[ <span data-i18n="projects.viewCode">View Code</span> ]
+          </a>
+        </div>
+
+        <div class="flex flex-col items-start w-full min-w-0" data-reveal>
+          <div class="group relative w-full rounded-2xl bg-gradient-to-b from-[#1b140d] to-[#0a0705] p-3 lg:p-4 shadow-bezel">
+            <div class="flex items-center gap-1.5 px-1 pb-3">
+              <span class="h-2.5 w-2.5 rounded-full bg-red-500/70"></span>
+              <span class="h-2.5 w-2.5 rounded-full bg-crt-amber/70"></span>
+              <span class="h-2.5 w-2.5 rounded-full bg-crt-green/70"></span>
+              <span class="ml-auto flex items-center gap-1.5 text-[10px] tracking-widest text-crt-green/70">
+                <span class="h-1.5 w-1.5 rounded-full bg-crt-green led animate-blink"></span><span data-i18n="projects.live">LIVE</span>
+              </span>
+            </div>
+            <div class="screen-glass relative aspect-[4/3] flex items-center justify-center rounded-lg overflow-hidden border border-crt-green/15 bg-crt-screen p-4 lg:p-6">
+              <img src="/projects/user-management.jpg" alt="User management dashboard" loading="lazy" decoding="async" class="max-w-full max-h-full object-contain drop-shadow-[0_0_20px_rgba(0,0,0,0.6)]" />
+              <div class="scan-sweep"></div>
+            </div>
+          </div>
+          <h3 class="font-display text-3xl tracking-wide mt-6 lg:mt-8 text-crt-ink" data-i18n="projects.p2.title">User Management</h3>
+
+          <a
+            href="https://chimerical-gelato-fbd9c4.netlify.app/"
+            target="_blank"
+            rel="noreferrer"
+            class="text-crt-green font-medium flex items-center text-lg mt-3"
+            >chimerical-gelato-fbd9c4.netlify.app
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5 ml-2 -mr-1">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+            </svg>
+          </a>
+
+          <p class="text-crt-ink/60 mt-4 leading-relaxed" data-i18n="projects.p2.desc">
+            A user management dashboard with full create, read, update and
+            delete functionality, built with React and TypeScript on top of a
+            typed component structure.
+          </p>
+          <div class="flex gap-2 mt-4 lg:mt-6 flex-wrap">
+            <div class="rounded-md border border-crt-green/30 text-crt-green px-2.5 py-1 text-xs tracking-wide">TypeScript</div>
+            <div class="rounded-md border border-crt-green/30 text-crt-green px-2.5 py-1 text-xs tracking-wide">React</div>
+            <div class="rounded-md border border-crt-green/30 text-crt-green px-2.5 py-1 text-xs tracking-wide">CSS</div>
+          </div>
+          <a
+            href="https://github.com/blagojramadanov/nutzerverwaltung.git"
+            target="_blank"
+            rel="noreferrer"
+            class="mt-6 lg:mt-8 text-sm lg:text-base font-medium bg-crt-green/10 text-crt-green border border-crt-green/50 hover:bg-crt-green hover:text-crt-bg hover:shadow-glow rounded-md px-5 py-3 flex items-center justify-center transition"
+            >[ <span data-i18n="projects.viewCode">View Code</span> ]
+          </a>
+        </div>
+
+        <div class="flex flex-col items-start w-full min-w-0" data-reveal>
+          <div class="group relative w-full rounded-2xl bg-gradient-to-b from-[#1b140d] to-[#0a0705] p-3 lg:p-4 shadow-bezel">
+            <div class="flex items-center gap-1.5 px-1 pb-3">
+              <span class="h-2.5 w-2.5 rounded-full bg-red-500/70"></span>
+              <span class="h-2.5 w-2.5 rounded-full bg-crt-amber/70"></span>
+              <span class="h-2.5 w-2.5 rounded-full bg-crt-green/70"></span>
+              <span class="ml-auto flex items-center gap-1.5 text-[10px] tracking-widest text-crt-green/70">
+                <span class="h-1.5 w-1.5 rounded-full bg-crt-green led animate-blink"></span><span data-i18n="projects.live">LIVE</span>
+              </span>
+            </div>
+            <div class="screen-glass relative aspect-[4/3] flex items-center justify-center rounded-lg overflow-hidden border border-crt-green/15 bg-crt-screen p-4 lg:p-6">
+              <img src="/projects/weather-app.jpg" alt="Weather app" loading="lazy" decoding="async" class="max-w-full max-h-full object-contain drop-shadow-[0_0_20px_rgba(0,0,0,0.6)]" />
+              <div class="scan-sweep"></div>
+            </div>
+          </div>
+          <h3 class="font-display text-3xl tracking-wide mt-6 lg:mt-8 text-crt-ink" data-i18n="projects.p3.title">Weather App</h3>
+
+          <a
+            href="https://blagojramadanov.github.io/wetter-app/"
+            target="_blank"
+            rel="noreferrer"
+            class="text-crt-green font-medium flex items-center text-lg mt-3"
+            >blagojramadanov.github.io/wetter-app
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5 ml-2 -mr-1">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+            </svg>
+          </a>
+
+          <p class="text-crt-ink/60 mt-4 leading-relaxed" data-i18n="projects.p3.desc">
+            Live weather data for any city in the world, with a clean,
+            single-view layout for current conditions and a simple city
+            search.
+          </p>
+          <div class="flex gap-2 mt-4 lg:mt-6 flex-wrap">
+            <div class="rounded-md border border-crt-green/30 text-crt-green px-2.5 py-1 text-xs tracking-wide">JavaScript</div>
+            <div class="rounded-md border border-crt-green/30 text-crt-green px-2.5 py-1 text-xs tracking-wide">SCSS</div>
+            <div class="rounded-md border border-crt-green/30 text-crt-green px-2.5 py-1 text-xs tracking-wide">REST API</div>
+          </div>
+          <a
+            href="https://github.com/blagojramadanov/wetter-app.git"
+            target="_blank"
+            rel="noreferrer"
+            class="mt-6 lg:mt-8 text-sm lg:text-base font-medium bg-crt-green/10 text-crt-green border border-crt-green/50 hover:bg-crt-green hover:text-crt-bg hover:shadow-glow rounded-md px-5 py-3 flex items-center justify-center transition"
+            >[ <span data-i18n="projects.viewCode">View Code</span> ]
+          </a>
+        </div>
+
+        <div class="flex flex-col items-start w-full min-w-0" data-reveal>
+          <div class="group relative w-full rounded-2xl bg-gradient-to-b from-[#1b140d] to-[#0a0705] p-3 lg:p-4 shadow-bezel">
+            <div class="flex items-center gap-1.5 px-1 pb-3">
+              <span class="h-2.5 w-2.5 rounded-full bg-red-500/70"></span>
+              <span class="h-2.5 w-2.5 rounded-full bg-crt-amber/70"></span>
+              <span class="h-2.5 w-2.5 rounded-full bg-crt-green/70"></span>
+              <span class="ml-auto flex items-center gap-1.5 text-[10px] tracking-widest text-crt-green/70">
+                <span class="h-1.5 w-1.5 rounded-full bg-crt-green led animate-blink"></span><span data-i18n="projects.live">LIVE</span>
+              </span>
+            </div>
+            <div class="screen-glass relative aspect-[4/3] flex items-center justify-center rounded-lg overflow-hidden border border-crt-green/15 bg-crt-screen p-4 lg:p-6">
+              <img src="/projects/notes-app.jpg" alt="Notes app" loading="lazy" decoding="async" class="max-w-full max-h-full object-contain drop-shadow-[0_0_20px_rgba(0,0,0,0.6)]" />
+              <div class="scan-sweep"></div>
+            </div>
+          </div>
+          <h3 class="font-display text-3xl tracking-wide mt-6 lg:mt-8 text-crt-ink" data-i18n="projects.p4.title">Notes App</h3>
+
+          <a
+            href="https://blagojramadanov.github.io/Notizapp/"
+            target="_blank"
+            rel="noreferrer"
+            class="text-crt-green font-medium flex items-center text-lg mt-3"
+            >blagojramadanov.github.io/Notizapp
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5 ml-2 -mr-1">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+            </svg>
+          </a>
+
+          <p class="text-crt-ink/60 mt-4 leading-relaxed" data-i18n="projects.p4.desc">
+            A simple, fast notes application with full create, read, update
+            and delete functionality — create a note, give it a title, and
+            save it instantly.
+          </p>
+          <div class="flex gap-2 mt-4 lg:mt-6 flex-wrap">
+            <div class="rounded-md border border-crt-green/30 text-crt-green px-2.5 py-1 text-xs tracking-wide">HTML</div>
+            <div class="rounded-md border border-crt-green/30 text-crt-green px-2.5 py-1 text-xs tracking-wide">CSS</div>
+            <div class="rounded-md border border-crt-green/30 text-crt-green px-2.5 py-1 text-xs tracking-wide">JavaScript</div>
+          </div>
+          <a
+            href="https://github.com/blagojramadanov/Notizapp.git"
+            target="_blank"
+            rel="noreferrer"
+            class="mt-6 lg:mt-8 text-sm lg:text-base font-medium bg-crt-green/10 text-crt-green border border-crt-green/50 hover:bg-crt-green hover:text-crt-bg hover:shadow-glow rounded-md px-5 py-3 flex items-center justify-center transition"
+            >[ <span data-i18n="projects.viewCode">View Code</span> ]
+          </a>
+        </div>
+      </div>
+
+      <div class="text-center mt-28 lg:mt-40 pt-4 scroll-mt-20 lg:scroll-mt-24" id="experience" data-reveal>
+        <h2 class="font-display text-4xl lg:text-6xl tracking-wide text-crt-green text-glow" data-i18n="experience.title">Experience &amp; Learning</h2>
+        <p class="text-crt-ink/70 mt-4 lg:mt-6 lg:text-lg" data-i18n="experience.subtitle">
+          Where my full stack journey has taken me so far.
+        </p>
+      </div>
+
+      <div class="mt-14 relative pl-8 lg:pl-10">
+        <div class="dash-line absolute left-2 lg:left-2.5 top-2 bottom-2 w-px"></div>
+
+        <div class="relative mb-6" data-reveal>
+          <span class="absolute -left-8 lg:-left-10 top-6 h-3.5 w-3.5 rounded-full bg-crt-green led animate-blink"></span>
+          <div class="terminal-window p-6 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
+            <span class="text-crt-green text-sm font-medium sm:w-44 shrink-0 tracking-wide">[ 2025 — <span data-i18n="experience.present">Present</span> ]</span>
+            <div>
+              <h3 class="font-bold text-lg text-crt-ink" data-i18n="common.fullStackDev">Full Stack Development</h3>
+              <p class="text-crt-ink/60 text-sm mt-1 leading-relaxed" data-i18n="experience.e1.desc">
+                devkarriere, via Attek Services — full stack development
+                program, modern frameworks and backend.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative mb-6" data-reveal>
+          <span class="absolute -left-8 lg:-left-10 top-6 h-3.5 w-3.5 rounded-full bg-crt-cyan led animate-blink"></span>
+          <div class="terminal-window p-6 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
+            <span class="text-crt-cyan text-sm font-medium sm:w-44 shrink-0 tracking-wide">[ 2025 — <span data-i18n="experience.present">Present</span> ]</span>
+            <div>
+              <h3 class="font-bold text-lg text-crt-ink">KI für Entwickler</h3>
+              <p class="text-crt-ink/60 text-sm mt-1 leading-relaxed" data-i18n="experience.e2.desc">
+                Ongoing course on using AI tools effectively inside a real
+                development workflow, from code assistance to integrating AI
+                features into applications — via freeCodeCamp and
+                DeepLearning.AI.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative mb-6" data-reveal>
+          <span class="absolute -left-8 lg:-left-10 top-6 h-3.5 w-3.5 rounded-full bg-crt-amber"></span>
+          <div class="terminal-window p-6 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
+            <span class="text-crt-amber text-sm font-medium sm:w-44 shrink-0 tracking-wide">[ 2025 ]</span>
+            <div>
+              <h3 class="font-bold text-lg text-crt-ink" data-i18n="common.fachinformatiker">Fachinformatiker — Anwendungsentwicklung</h3>
+              <p class="text-crt-ink/60 text-sm mt-1 leading-relaxed" data-i18n="experience.e3.desc">
+                FIT AG — internship in application development, working on
+                C++ projects.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative" data-reveal>
+          <span class="absolute -left-8 lg:-left-10 top-6 h-3.5 w-3.5 rounded-full bg-crt-ink/40"></span>
+          <div class="terminal-window p-6 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
+            <span class="text-crt-ink/50 text-sm font-medium sm:w-44 shrink-0 tracking-wide">[ 2022 — 2024 ]</span>
+            <div>
+              <h3 class="font-bold text-lg text-crt-ink" data-i18n="common.fachinformatiker">Fachinformatiker — Anwendungsentwicklung</h3>
+              <p class="text-crt-ink/60 text-sm mt-1 leading-relaxed" data-i18n="experience.e4.desc">
+                Labor Kneißler GmbH &amp; Co. KG — two-year internship developing
+                real-world applications and learning industry-standard
+                workflows, supported by courses in JavaScript, HTML and CSS.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="terminal-window mt-16 lg:mt-20 px-6 lg:px-10 text-center py-10 lg:py-14" data-reveal>
+        <h2 class="font-display text-4xl lg:text-5xl tracking-wide text-crt-green text-glow" data-i18n="moreExp.title">More Experience</h2>
+        <p class="text-crt-ink/70 mt-4 lg:mt-8 lg:text-lg max-w-2xl mx-auto" data-i18n="moreExp.desc">
+          You'll find more projects on my GitHub profile, built over time as I
+          keep learning. Take a look and see the code for yourself.
+        </p>
+        <a
+          href="https://github.com/blagojramadanov"
+          target="_blank"
+          rel="noreferrer"
+          class="mt-8 lg:mt-12 text-sm lg:text-base font-medium bg-crt-green/10 text-crt-green border border-crt-green/50 hover:bg-crt-green hover:text-crt-bg hover:shadow-glow rounded-md px-5 py-3 inline-flex items-center justify-center transition"
+          >[ <span data-i18n="moreExp.btn">View GitHub</span> ]
+        </a>
+      </div>
+    </div>
+
+    <div
+      class="flex flex-col-reverse lg:container lg:px-6 lg:mx-auto lg:grid lg:grid-cols-2 lg:gap-x-16 lg:items-center lg:mt-32 scroll-mt-20 lg:scroll-mt-24"
+      id="contact"
+    >
+      <div class="container mx-auto px-6 lg:px-0" data-reveal>
+        <h2 class="font-display text-4xl lg:text-5xl tracking-wide text-crt-green text-glow" data-i18n="contact.title">Any Questions?</h2>
+        <p class="text-crt-ink/70 mt-4 lg:mt-6 lg:text-lg" data-i18n="contact.desc">
+          Don't hesitate to reach out. Use the email address below, or find me
+          on my social profiles.
+        </p>
+        <div class="terminal-window mt-8 lg:mt-10 p-5 inline-block">
+          <a
+            href="mailto:blaze.ramadanov@gmail.com"
+            class="text-crt-green font-medium flex items-center text-lg lg:text-xl"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5 lg:w-6 lg:h-6 mr-2 lg:mr-3">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+            </svg>
+            blaze.ramadanov@gmail.com
+          </a>
+        </div>
+        <div class="flex gap-6 lg:gap-8 mt-6 lg:mt-10">
+          <a
+            href="https://www.linkedin.com/in/blagoj-ramadanov-31b7441b5/"
+            target="_blank"
+            rel="noreferrer"
+            class="group p-1 -ml-1"
+            aria-label="LinkedIn"
+          >
+            <svg
+              class="h-6 w-6 lg:h-8 lg:w-8 fill-crt-ink/60 transition group-hover:fill-crt-green group-hover:drop-shadow-[0_0_6px_rgba(77,255,143,0.7)]"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
+              />
+            </svg>
+          </a>
+          <a
+            href="https://github.com/blagojramadanov"
+            target="_blank"
+            rel="noreferrer"
+            class="group p-1"
+            aria-label="GitHub"
+          >
+            <svg
+              class="h-6 w-6 lg:h-8 lg:w-8 fill-crt-ink/60 transition group-hover:fill-crt-green group-hover:drop-shadow-[0_0_6px_rgba(77,255,143,0.7)]"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="terminal-window container mx-auto px-6 lg:px-8 my-16 lg:my-0 py-8 lg:py-10" data-reveal>
+        <div class="flex items-center gap-1.5 mb-5">
+          <span class="h-2.5 w-2.5 rounded-full bg-red-500/70"></span>
+          <span class="h-2.5 w-2.5 rounded-full bg-crt-amber/70"></span>
+          <span class="h-2.5 w-2.5 rounded-full bg-crt-green/70"></span>
+        </div>
+        <form action="https://formspree.io/f/xgojjokj" method="POST" class="space-y-4">
+          <div>
+            <label for="name" class="block text-xs tracking-widest text-crt-green/70 mb-1.5" data-i18n="contact.labelName">NAME</label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              required
+              placeholder="Jane Doe"
+              data-i18n-placeholder="contact.placeholderName"
+              class="w-full bg-crt-screen border border-crt-green/25 rounded-md px-3 py-2.5 text-sm text-crt-ink placeholder:text-crt-ink/30 focus:outline-none focus:border-crt-green focus:shadow-glow transition"
+            />
+          </div>
+          <div>
+            <label for="email" class="block text-xs tracking-widest text-crt-green/70 mb-1.5" data-i18n="contact.labelEmail">EMAIL</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              placeholder="jane@example.com"
+              data-i18n-placeholder="contact.placeholderEmail"
+              class="w-full bg-crt-screen border border-crt-green/25 rounded-md px-3 py-2.5 text-sm text-crt-ink placeholder:text-crt-ink/30 focus:outline-none focus:border-crt-green focus:shadow-glow transition"
+            />
+          </div>
+          <div>
+            <label for="message" class="block text-xs tracking-widest text-crt-green/70 mb-1.5" data-i18n="contact.labelMessage">MESSAGE</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="4"
+              required
+              placeholder="Type your message..."
+              data-i18n-placeholder="contact.placeholderMessage"
+              class="w-full bg-crt-screen border border-crt-green/25 rounded-md px-3 py-2.5 text-sm text-crt-ink placeholder:text-crt-ink/30 focus:outline-none focus:border-crt-green focus:shadow-glow transition resize-none"
+            ></textarea>
+          </div>
+          <input type="text" name="_gotcha" class="hidden" tabindex="-1" autocomplete="off" />
+          <input type="hidden" name="_subject" value="New message from portfolio" />
+          <button
+            type="submit"
+            class="w-full text-sm lg:text-base font-medium bg-crt-green/10 text-crt-green border border-crt-green/50 hover:bg-crt-green hover:text-crt-bg hover:shadow-glow rounded-md px-5 py-3 flex items-center justify-center transition tracking-wide"
+          >[ <span data-i18n="contact.btnSend">Send Message</span> ]</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="border-t border-crt-green/15 px-6 text-center mt-24 py-5 text-crt-ink/50 text-sm tracking-wide">
+      <a href="./impressum.html" class="mr-4 hover:text-crt-green transition" data-i18n="footer.impressum">Impressum</a>
+      <span>&copy; <span id="year"></span> Blagoj Ramadanov</span>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
