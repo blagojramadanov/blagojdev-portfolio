@@ -15,7 +15,8 @@ body {
   background-color: #050a07;
   background-image:
     radial-gradient(ellipse 120% 90% at 50% -10%, rgba(77, 255, 143, 0.08), transparent 60%),
-    radial-gradient(ellipse 90% 70% at 100% 30%, rgba(95, 243, 255, 0.05), transparent 60%);
+    radial-gradient(ellipse 90% 70% at 100% 30%, rgba(95, 243, 255, 0.05), transparent 60%),
+    radial-gradient(ellipse 70% 50% at 8% 85%, rgba(255, 179, 71, 0.06), transparent 60%);
 }
 
 ::selection {
@@ -77,6 +78,10 @@ body {
   text-shadow: 0 0 4px rgba(77, 255, 143, 0.85), 0 0 18px rgba(77, 255, 143, 0.35);
 }
 
+.text-glow-amber {
+  text-shadow: 0 0 4px rgba(255, 179, 71, 0.85), 0 0 18px rgba(255, 179, 71, 0.35);
+}
+
 .terminal-window {
   background: linear-gradient(180deg, rgba(15, 26, 18, 0.9), rgba(6, 12, 8, 0.95));
   border: 1px solid rgba(77, 255, 143, 0.22);
@@ -92,8 +97,8 @@ body {
 }
 
 .terminal-titlebar {
-  border-bottom: 1px solid rgba(77, 255, 143, 0.15);
-  background: linear-gradient(180deg, rgba(77, 255, 143, 0.06), transparent);
+  border-bottom: 1px solid rgba(255, 179, 71, 0.18);
+  background: linear-gradient(180deg, rgba(255, 179, 71, 0.07), transparent);
 }
 
 .screen-glass {
